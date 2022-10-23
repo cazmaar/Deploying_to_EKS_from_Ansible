@@ -1,0 +1,17 @@
+---
+- name: Deploy application in a new name space.
+  hosts: localhost #because we are connecting to eks cluster we don't need to specify any Ip address of instance
+  tasks:
+    - name: Creating a namespace
+      community.kubernetes.k8s:
+        name: testing
+        api_version: v1
+        kind: Namespace
+        state: present
+      # kubeconfig: #if i don't specify this path to the file ansible will connect the one at ~/.kube/config and that is fine by me
+    - name: Deploy an app in the cluster using deployment
+      community.kubernetes.k8s:
+        src: ~/Desktop/DevOps/10.Kubernetes/kubernets_config_files/drinks/drinks.yaml
+        state: present
+        # kubeconfig: #if i don't specify this path to the file ansible will connect the one at ~/.kube/config and that is fine by me
+      
